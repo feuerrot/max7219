@@ -64,7 +64,7 @@ TEST_OFF = 0
 TEST_ON  = 1
 
 class max7219:
-	digits = {
+	char = {
 		"0": 0x7e,
 		"1": 0x30,
 		"2": 0x6d,
@@ -146,10 +146,12 @@ class max7219:
 			test or TEST_OFF
 		)
 
-	def write_digit(self, position, digit):
+	def write_char(self, position, char):
+		if char not in self.char:
+			char = " "
 		self._write(
-			position,
-			digit
+			8 - position,
+			self.char[char]
 		)
 
 	def write_string(self, string):
@@ -158,7 +160,7 @@ class max7219:
 		if len(string) > 8:
 			raise Exception
 		for pos in range(len(string)):
-			if string[pos] in self.digits:
-				self.write_digit(8-pos, self.digits[string[pos]])
-			else:
-				self.write_digit(8-pos, self.digits[" "])
+			self.write_char(pos, string[pos])
+
+	def clear(self):
+		self.write_string("        ")
