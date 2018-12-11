@@ -84,6 +84,7 @@ class max7219:
 		"H": 0x37,
 		"L": 0x0e,
 		"P": 0x67,
+		"U": 0x3e,
 		"-": 0x01,
 		" ": 0x00
 	}
@@ -91,7 +92,7 @@ class max7219:
 	def __init__(self):
 		self.cs = machine.Pin(5, machine.Pin.OUT)
 		self.spi = machine.SPI(2)
-		self.spi.init(sck=machine.Pin(18), mosi=machine.Pin(23), baudrate=10000000)
+		self.spi.init(sck=machine.Pin(18), mosi=machine.Pin(23), baudrate=30000000)
 		self.set_shutdown()
 		self.set_decode()
 		self.set_intensity()
